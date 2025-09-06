@@ -1,0 +1,110 @@
+body.has-popup {
+    overflow: hidden;
+
+    & header, & main, & footer {
+        filter: blur(5px);
+    }
+}
+
+.popup {
+    container: popup / inline-size;
+
+    /* Positioning */
+    position: fixed;
+    z-index: 10;
+    --margin-size: 16px;
+    width: calc(100% - var(--margin-size) * 2);
+    max-width: 750px;
+    max-height: 78%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+
+    animation: slide-in 500ms;
+    background-color: var(--bg-90);
+    transition: background-color var(--trans-duration) ease-in-out;
+    color: var(--color-text-main);
+
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    border: 2px solid var(--color-accent-lighter);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+
+    &.closing { animation: slide-out 300ms ease-in forwards }
+
+    /* Content */
+    padding: 32px;
+
+    & h2 { text-align: left }
+    & ul, ol { padding-left: 32px }
+    & .quote { font-style: italic }
+
+    /* Close button */
+    & .btn-close {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        border: none;
+        outline: none;
+        padding: 0;
+
+        cursor: pointer;
+
+        background-color: transparent;
+        &:hover { background-color: transparent }
+    }
+
+    /* Buttons */
+    & .btns {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        & a {
+            text-decoration: none;
+        }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        filter: blur(8px);
+    }
+}
+
+@container popup (inline-size < 640px) {
+    .btns {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    label.switch {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .popup {
+        --margin-size: 8px;
+        padding: 32px 16px;
+        max-height: 89%;
+    }
+}
+
+@keyframes slide-in {
+    from { transform: translate(-50%, 100%); }
+    to { transform: translate(-50%, 0); }
+}
+
+@keyframes slide-out {
+    from { transform: translate(-50%, 0); }
+    to { transform: translate(-50%, 100%); }
+}

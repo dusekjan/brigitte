@@ -1,0 +1,42 @@
+html {
+    font-family: "Noto Serif", arial, sans-serif;
+}
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+h2 {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 20px;
+}
+
+p {
+    margin: 8px 0 0;
+}
+
+.prayer-text {
+    margin-top: 8px;
+    font-size: 18px;
+    text-align: justify;
+    line-height: 1.6;
+    letter-spacing: 1px;
+}
+
+.prayer-start {
+    font-size: 16px;
+}
+
+.prayer-start span {
+    margin-right: 8px;
+}
+
+footer,
+.popup,
+.previous,
+.next {
+    display: none;
+}

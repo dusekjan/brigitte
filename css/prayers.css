@@ -1,0 +1,253 @@
+.prayer-wrapper {
+    width: calc(var(--prayer-width));
+    position: relative;
+    margin: 0 auto;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 16px;
+        box-shadow: rgb(255, 172, 38, 0.2) 0px 0px 0px 1px inset, rgb(255, 172, 38, 0.9) 0px 0px 0px 1px;
+    }
+}
+
+.prayer-container {
+    display: flex;
+    flex-direction: row;
+    /* align-items: flex-start; */
+    position: relative;
+    transform-style: preserve-3d;
+    width: 3000px;
+
+    transition: left var(--trans-duration) ease-in-out;
+    left: calc(-1 * var(--prayer-width) * var(--current-index));
+}
+
+.prayer-card {
+    width: var(--prayer-width);
+    flex-shrink: 0;
+    text-align: center;
+    padding: 32px;
+
+    transition: all var(--trans-duration) ease-in-out;
+    opacity: 0;
+    position: relative;
+
+    &::after, &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--trans-duration);
+    }
+
+    /* kazdy box ma nastaven gradient pro after (zleva doprava) a pro before (zprava doleva) */
+    /* pokud je box aktivni, tak se mu oba skryjou */
+    /* podle toho jestli je box pred/za aktivnim prvkem, tak se odkryje prislusny gradient */
+    &::after {
+        background: linear-gradient(to right, transparent, var(--bg-80) 20%, var(--bg) 70%);
+    }
+
+    &::before {
+        background: linear-gradient(to left, transparent, var(--bg-80) 20%, var(--bg) 70%);
+    }
+}
+
+#brigitte-1y {
+    & .prayer-card:nth-child(n + 3) {
+        .prayer-text::first-letter {
+            margin-top: -5px;
+        }
+    }
+}
+
+#brigitte-12y {
+    & .prayer-card:nth-child(2) {
+        .prayer-text::first-letter {
+            margin-top: -5px;
+        }
+    }
+}
+
+.active {
+    opacity: 1;
+    background-color: var(--bg);
+    z-index: 1;
+}
+
+/* every prayer before .active */
+.prayer-card:has(~ .active) {
+    transform-origin: right center;
+    transform:
+        perspective(600px)
+        translateX(calc(-1 * var(--prayer-gap)))
+        translateZ(-100px)
+        rotateY(-25deg)
+        skewY(-10deg);
+
+    &::before{ opacity: 1 }
+}
+
+/* every prayer after .active */
+.active ~ .prayer-card {
+    transform-origin: left center;
+    transform:
+        perspective(600px)
+        translateX(var(--prayer-gap))
+        translateZ(-100px)
+        rotateY(25deg)
+        skewY(10deg);
+
+    &::after { opacity: 1 }
+}
+
+/* one prayer before .active */
+.prayer-card:has(+ .active) {
+    opacity: 1;
+}
+
+/* one prayer after .active */
+.active + .prayer-card {
+    opacity: 1;
+}
+
+.prayer-text {
+    margin: 0;
+    font-size: 18px;
+    text-align: justify;
+    line-height: 1.6;
+    letter-spacing: 1px;
+
+    &::first-letter {
+        font-size: 3.4em;
+        float: left;
+        line-height: 1;
+        margin-top: 6px;
+        margin-right: 4px;
+    }
+}
+
+.prayer-start {
+    margin: 0 48px;
+    padding: 16px 0;
+    border-top: 2px dotted;
+    font-size: 15px;
+    font-style: italic;
+
+    & span { margin-right: 24px }
+}
+
+.prayer-end {
+    margin: 0;
+    padding: 16px 0;
+    font-size: 15px;
+    font-style: italic;
+
+    & span { margin-right: 24px }
+}
+
+.next, .previous {
+    position: absolute;
+    top: 50%;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+
+    transition: color var(--duration);
+    cursor: pointer;
+    color: var(--color-accent-lighter);
+    height: 100%;
+    width: 50px;
+    z-index: 2;
+
+    &:hover {
+        color: var(--color-accent-hover);
+    }
+
+    &:active, &.active-button {
+        transition: none;
+        color: var(--color-accent-active);
+    }
+}
+
+.next {
+    right: 0;
+    transform: translate(100%, -50%);
+    padding-left: 10px;
+}
+
+.previous {
+    left: 0;
+    transform: translate(-100%, -50%);
+    padding-right: 10px;
+}
+
+.icon.arrow {
+    &.inverted { display: none; }
+    &.normal {  display: block; }
+}
+
+@media (max-width: 640px) {
+    #brigitte-1y {
+        & .prayer-card:nth-child(n + 3) {
+            .prayer-text::first-letter {
+                margin-top: -2px;
+            }
+        }
+    }
+
+    #brigitte-12y {
+        & .prayer-card:nth-child(2) {
+            .prayer-text::first-letter {
+                margin-top: -2px;
+            }
+        }
+    }
+
+    .prayer-start {
+        margin: 0;
+        padding: 18px 0;
+        font-size: 14px;
+    }
+
+    .prayer-end {
+        padding: 18px 0;
+        font-size: 14px;
+    }
+
+    .prayer-text {
+        font-size: 16px;
+        &::first-letter {
+            font-size: 3.2em;
+            margin-top: 7px;
+        }
+    }
+
+    .next, .previous {
+        color: var(--color-accent-light);
+        &:hover { color: var(--color-accent-light) }
+        &:active, &.active-button { color: var(--color-accent-active) }
+    }
+    .next {
+        transform: translate(8px, -50%);
+        padding-left: 5px;
+    }
+    .previous {
+        transform: translate(-8px, -50%);
+        padding-right: 5px;
+    }
+
+    .icon.arrow {
+        &.inverted { display: block; }
+        &.normal {  display: none; }
+        & > circle { fill: currentColor }
+    }
+}
