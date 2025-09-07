@@ -61,22 +61,6 @@
     }
 }
 
-#brigitte-1y {
-    & .prayer-card:nth-child(n + 3) {
-        .prayer-text::first-letter {
-            margin-top: -5px;
-        }
-    }
-}
-
-#brigitte-12y {
-    & .prayer-card:nth-child(2) {
-        .prayer-text::first-letter {
-            margin-top: -5px;
-        }
-    }
-}
-
 .active {
     opacity: 1;
     background-color: var(--bg);
@@ -126,12 +110,11 @@
     line-height: 1.6;
     letter-spacing: 1px;
 
-    &::first-letter {
-        font-size: 3.4em;
+    & .first-letter {
+        font-size: 3.1em;
         float: left;
         line-height: 1;
-        margin-top: 6px;
-        margin-right: 4px;
+        margin-right: 5px;
     }
 }
 
@@ -196,22 +179,6 @@
 }
 
 @media (max-width: 640px) {
-    #brigitte-1y {
-        & .prayer-card:nth-child(n + 3) {
-            .prayer-text::first-letter {
-                margin-top: -2px;
-            }
-        }
-    }
-
-    #brigitte-12y {
-        & .prayer-card:nth-child(2) {
-            .prayer-text::first-letter {
-                margin-top: -2px;
-            }
-        }
-    }
-
     .prayer-start {
         margin: 0;
         padding: 18px 0;
@@ -225,10 +192,6 @@
 
     .prayer-text {
         font-size: 16px;
-        &::first-letter {
-            font-size: 3.2em;
-            margin-top: 7px;
-        }
     }
 
     .next, .previous {
