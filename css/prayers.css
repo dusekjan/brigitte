@@ -11,6 +11,7 @@
         width: 100%;
         height: 100%;
         border-radius: 16px;
+        pointer-events: none;
         box-shadow: rgb(255, 172, 38, 0.2) 0px 0px 0px 1px inset, rgb(255, 172, 38, 0.9) 0px 0px 0px 1px;
     }
 }

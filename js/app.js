@@ -78,6 +78,8 @@ document.addEventListener("keyup", (event) => {
 });
 
 // posouvani slajdem - hammer.min.js
+delete Hammer.defaults.cssProps.userSelect;  // aby slo vybrat text
+
 const element1y = document.querySelector("#brigitte-1y .prayer-wrapper");
 const hammer1y = new Hammer(element1y);
 hammer1y.on('swipeleft', () => showSlides(index + 1));
