@@ -3,6 +3,8 @@
     position: relative;
     margin: 0 auto;
 
+    touch-action: pinch-zoom pan-y !important;
+
     &::after {
         content: "";
         position: absolute;
