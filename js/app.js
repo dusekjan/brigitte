@@ -94,32 +94,77 @@ dom.nav.addEventListener("click", (event) => {
     if (!target) return;
 
     mode = target.dataset.mode;
-    dom.menu.hidden = true;
     switch (mode) {
         case "1y":
-            document.querySelector("#brigitte-1y").hidden = false;
+            show1y();
+            history.pushState(null, "", `${toHashString(mode)}`);
             break;
         case "12y":
-            document.querySelector("#brigitte-12y").hidden = false;
+            show12y();
+            history.pushState(null, "", `${toHashString(mode)}`);
             break;
     }
-
-    localStorage.setItem("selected", mode);
-    showSlides(1);
 });
 
 // vratit se do menu
 dom.brigitte1y.toMenu.addEventListener("click", () => {
-    dom.brigitte1y.node.hidden = true;
-    dom.menu.hidden = false;
-    localStorage.removeItem("selected");
+    showMenu();
+    history.pushState(null, "", `/`);
 });
 
 dom.brigitte12y.toMenu.addEventListener("click", () => {
+    showMenu();
+    history.pushState(null, "", `/`);
+});
+
+function showMenu() {
+    mode = "";
+    dom.brigitte1y.node.hidden = true;
     dom.brigitte12y.node.hidden = true;
     dom.menu.hidden = false;
     localStorage.removeItem("selected");
+}
+
+function show1y() {
+    mode = "1y";
+    dom.brigitte1y.node.hidden = false;
+    dom.brigitte12y.node.hidden = true;
+    dom.menu.hidden = true;
+    showSlides(1);
+    localStorage.setItem("selected", mode);
+}
+
+function show12y() {
+    mode = "12y";
+    dom.brigitte1y.node.hidden = true;
+    dom.brigitte12y.node.hidden = false;
+    dom.menu.hidden = true;
+    showSlides(1);
+    localStorage.setItem("selected", mode);
+}
+
+// navigace pomoci popstate
+window.addEventListener("popstate", () => {
+    switch (window.location.hash) {
+        case "#rocni":
+            show1y();
+            break;
+        case "#dvanactileta":
+            show12y();
+            break;
+        default:
+            showMenu();
+            history.replaceState(null, "", "/");
+    }
 });
+
+function toHashString(mode) {
+    switch (mode) {
+        case "1y": return "#rocni";
+        case "12y": return "#dvanactileta";
+        default: return "/";
+    }
+}
 
 function app() {
     let isDark = localStorage.getItem("dark-mode") == "1";
@@ -127,15 +172,21 @@ function app() {
     isDark && document.querySelector("meta[name='theme-color']").setAttribute("content", "#121212")
 
     const selected = localStorage.getItem("selected");
-    if (selected) {
+    const hash = window.location.hash;
+
+    // hash ma prednost pred localStorage
+    if (hash == "#dvanactileta") { show12y() }
+    else if (hash == "#rocni") { show1y() }
+    else if (selected) {
         dom[`brigitte${selected}`].node.hidden = false;
         dom.menu.hidden = true;
         mode = selected;
         showSlides(1);
+        history.replaceState(null, "", `${toHashString(mode)}`);
     } else {
-        dom.menu.hidden = false;
-        dom.brigitte1y.node.hidden = true;
-        dom.brigitte12y.node.hidden = true;
+        showMenu();
+        history.replaceState(null, "", "/");
     }
 }
+
 app();

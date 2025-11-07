@@ -54,7 +54,6 @@ class Modal {
 
     _setupDarkMode() {
         const dark = this.popupDiv.querySelector(".dark-mode");
-        console.log(this.popupDiv, dark)
         dark.checked = localStorage.getItem("dark-mode") != "1";
 
         dark.addEventListener("change", () => {
