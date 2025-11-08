@@ -100,7 +100,7 @@ finger12y.track("drag", (data) => {
     } else if (data.initial_direction == "right") {
         showSlides(index - 1);
     }
-}, { preventDefault: "true" });
+}, { preventDefault: "horizontal" });
 
 // vyber poboznosti v menu
 dom.nav.addEventListener("click", (event) => {
