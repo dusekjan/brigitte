@@ -77,18 +77,27 @@ document.addEventListener("keyup", (event) => {
     else if (event.key == "ArrowRight") { rightHeld = false };
 });
 
-// posouvani slajdem - hammer.min.js
-delete Hammer.defaults.cssProps.userSelect;  // aby slo vybrat text
 
+// posouvani slajdem - thefinger.min.js
 const element1y = document.querySelector("#brigitte-1y .prayer-wrapper");
-const hammer1y = new Hammer(element1y);
-hammer1y.on('swipeleft', () => showSlides(index + 1));
-hammer1y.on('swiperight', () => showSlides(index - 1));
+const finger1y = new TheFinger(element1y);
+finger1y.track("drag", (data) => {
+    if (data.final_direction && data.initial_direction == "left") {
+        showSlides(index + 1);
+    } else if (data.final_direction && data.initial_direction == "right") {
+        showSlides(index - 1);
+    }
+}, { preventDefault: "horizontal" });
 
 const element12y = document.querySelector("#brigitte-12y .prayer-wrapper");
-const hammer12y = new Hammer(element12y);
-hammer12y.on('swipeleft', () => showSlides(index + 1));
-hammer12y.on('swiperight', () => showSlides(index - 1));
+const finger12y = new TheFinger(element12y);
+finger12y.track("drag", (data) => {
+    if (data.final_direction && data.initial_direction == "left") {
+        showSlides(index + 1);
+    } else if (data.final_direction && data.initial_direction == "right") {
+        showSlides(index - 1);
+    }
+}, { preventDefault: "true" });
 
 // vyber poboznosti v menu
 dom.nav.addEventListener("click", (event) => {
