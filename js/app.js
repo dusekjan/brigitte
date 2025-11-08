@@ -77,14 +77,15 @@ document.addEventListener("keyup", (event) => {
     else if (event.key == "ArrowRight") { rightHeld = false };
 });
 
-
 // posouvani slajdem - thefinger.min.js
 const element1y = document.querySelector("#brigitte-1y .prayer-wrapper");
 const finger1y = new TheFinger(element1y);
 finger1y.track("drag", (data) => {
-    if (data.final_direction && data.initial_direction == "left") {
+    if (!data.final_direction || data.speed < 0.20) return;
+
+    if (data.initial_direction == "left") {
         showSlides(index + 1);
-    } else if (data.final_direction && data.initial_direction == "right") {
+    } else if (data.initial_direction == "right") {
         showSlides(index - 1);
     }
 }, { preventDefault: "horizontal" });
@@ -92,9 +93,11 @@ finger1y.track("drag", (data) => {
 const element12y = document.querySelector("#brigitte-12y .prayer-wrapper");
 const finger12y = new TheFinger(element12y);
 finger12y.track("drag", (data) => {
-    if (data.final_direction && data.initial_direction == "left") {
+    if (!data.final_direction || data.speed < 0.20) return;
+
+    if (data.initial_direction == "left") {
         showSlides(index + 1);
-    } else if (data.final_direction && data.initial_direction == "right") {
+    } else if (data.initial_direction == "right") {
         showSlides(index - 1);
     }
 }, { preventDefault: "true" });
