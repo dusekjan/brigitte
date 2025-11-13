@@ -48,6 +48,7 @@
         pointer-events: none;
         opacity: 0;
         transition: opacity var(--trans-duration);
+        z-index: 1;
     }
 
     /* kazdy box ma nastaven gradient pro after (zleva doprava) a pro before (zprava doleva) */
