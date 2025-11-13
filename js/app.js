@@ -201,6 +201,16 @@ function app() {
         showMenu();
         history.replaceState(null, "", "/");
     }
+
+    // jedna prilis dlouha modlitba
+    dom.brigitte1y.container.querySelector(".long .prayer-text").addEventListener("scroll", (event) => {
+        const text = event.target;
+        if (text.scrollTop + text.clientHeight >= text.scrollHeight - 2) {  // 2px pred koncem
+            text.nextElementSibling.classList.add("scrolled");
+        } else {
+            text.nextElementSibling.classList.remove("scrolled");
+        }
+    });
 }
 
 app();
